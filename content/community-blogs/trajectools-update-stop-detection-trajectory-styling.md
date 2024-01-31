@@ -40,7 +40,7 @@ showcase: "planet"
 
 
 
-<p>Anyway, here&#8217;s a screencast showcasing stop detection in AIS data, featuring the recently added trajectory styling using interpolated lines:</p>
+<p>Let me close this quick status update with a screencast showcasing stop detection in AIS data, featuring the recently added trajectory styling using interpolated lines:</p>
 
 
 
