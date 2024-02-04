@@ -8,7 +8,7 @@ draft: "true"
 showcase: "planet"
 ---
 
-<p>Besides following hashtags, such as #GISChat, #QGIS, #FOSS4G, and #OSGeo, curating good lists is probably the best way to stay up to date with geospatial developments. </p>
+<p>Besides following hashtags, such as #GISChat, #QGIS, #OpenStreetMap, #FOSS4G, and #OSGeo, curating good lists is probably the best way to stay up to date with geospatial developments.</p>
 
 
 
