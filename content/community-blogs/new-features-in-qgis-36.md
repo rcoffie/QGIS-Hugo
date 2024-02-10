@@ -66,56 +66,57 @@ showcase: "planet"
 
 <p>Creating and viewing 3D maps in QGIS with the correct camera location and angle, scene tilt, light, and other parameters can be a time-consuming and error-prone process. This is because it requires users to manually adjust these settings, often through trial and error. However, with the introduction of the new 3D map view API in QGIS, Python plugins can now automate this process, making it much easier, consistent and more efficient to create high-quality 3D maps that are visually appealing and informative.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># List all open 3D map canvases
-iface.mapCanvases3D()
-# [&lt;qgis._3d.Qgs3DMapCanvas object at 0x7f23491b5e10&gt;]
-canvas = iface.mapCanvases3D()[0]
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># List all open 3D map canvases
+</span><span class="n">iface</span><span class="p">.</span><span class="n">mapCanvases3D</span><span class="p">()</span>
+<span class="c1"># [&lt;qgis._3d.Qgs3DMapCanvas object at 0x7f23491b5e10&gt;]
+</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">iface</span><span class="p">.</span><span class="n">mapCanvases3D</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div></div>
+<p>Now let’s try something more complicated:</p>
 
-# Let's change some settings!
-ms = canvas.mapSettings()
-ms.setEyeDomeLightingEnabled(True)
-ms.setBackgroundColor(QColor('beige'))
-ms.setTerrainMapTheme('dtm')
-ms.setFieldOfView(110)
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Let's change some settings!
+</span><span class="n">ms</span> <span class="o">=</span> <span class="n">canvas</span><span class="p">.</span><span class="n">mapSettings</span><span class="p">()</span>
+<span class="n">ms</span><span class="p">.</span><span class="n">setEyeDomeLightingEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">ms</span><span class="p">.</span><span class="n">setBackgroundColor</span><span class="p">(</span><span class="n">QColor</span><span class="p">(</span><span class="s">'beige'</span><span class="p">))</span>
+<span class="n">ms</span><span class="p">.</span><span class="n">setTerrainMapTheme</span><span class="p">(</span><span class="s">'dtm'</span><span class="p">)</span>
+<span class="n">ms</span><span class="p">.</span><span class="n">setFieldOfView</span><span class="p">(</span><span class="mi">110</span><span class="p">)</span>
 
-# Move the camera to look at specific map coordinates in layer's CRS
-cam = canvas.cameraController()
-mapPoint = QgsVector3D(-498175.92, -1205400.58, 210)
-worldPoint = ms.mapToWorldCoordinates(mapPoint)
-cam.setLookingAtPoint(worldPoint, 60, 45, 100)
+<span class="c1"># Move the camera to look at specific map coordinates in layer's CRS
+</span><span class="n">cam</span> <span class="o">=</span> <span class="n">canvas</span><span class="p">.</span><span class="n">cameraController</span><span class="p">()</span>
+<span class="n">mapPoint</span> <span class="o">=</span> <span class="n">QgsVector3D</span><span class="p">(</span><span class="o">-</span><span class="mf">498175.92</span><span class="p">,</span> <span class="o">-</span><span class="mf">1205400.58</span><span class="p">,</span> <span class="mi">210</span><span class="p">)</span>
+<span class="n">worldPoint</span> <span class="o">=</span> <span class="n">ms</span><span class="p">.</span><span class="n">mapToWorldCoordinates</span><span class="p">(</span><span class="n">mapPoint</span><span class="p">)</span>
+<span class="n">cam</span><span class="p">.</span><span class="n">setLookingAtPoint</span><span class="p">(</span><span class="n">worldPoint</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 
-# Create four new 3D map views
-c1 = iface.createNewMapCanvas3D('South View')
-c2 = iface.createNewMapCanvas3D('West View')
-c3 = iface.createNewMapCanvas3D('North View')
-c4 = iface.createNewMapCanvas3D('East View')
+<span class="c1"># Create four new 3D map views
+</span><span class="n">c1</span> <span class="o">=</span> <span class="n">iface</span><span class="p">.</span><span class="n">createNewMapCanvas3D</span><span class="p">(</span><span class="s">'South View'</span><span class="p">)</span>
+<span class="n">c2</span> <span class="o">=</span> <span class="n">iface</span><span class="p">.</span><span class="n">createNewMapCanvas3D</span><span class="p">(</span><span class="s">'West View'</span><span class="p">)</span>
+<span class="n">c3</span> <span class="o">=</span> <span class="n">iface</span><span class="p">.</span><span class="n">createNewMapCanvas3D</span><span class="p">(</span><span class="s">'North View'</span><span class="p">)</span>
+<span class="n">c4</span> <span class="o">=</span> <span class="n">iface</span><span class="p">.</span><span class="n">createNewMapCanvas3D</span><span class="p">(</span><span class="s">'East View'</span><span class="p">)</span>
 
-# Apply settings to all open 3D map views
-for canvas in iface.mapCanvases3D():
-	canvas.mapSettings().setEyeDomeLightingEnabled(True)
+<span class="c1"># Apply settings to all open 3D map views
+</span><span class="k">for</span> <span class="n">canvas</span> <span class="ow">in</span> <span class="n">iface</span><span class="p">.</span><span class="n">mapCanvases3D</span><span class="p">():</span>
+	<span class="n">canvas</span><span class="p">.</span><span class="n">mapSettings</span><span class="p">().</span><span class="n">setEyeDomeLightingEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
 
-# Define a camera pose to update the views' cameras
-pose = QgsCameraPose()
-pose.setCenterPoint(QgsVector3D(0, 210, 0))  # This is in 3D world coordinates
-pose.setDistanceFromCenterPoint(100)
-pose.setPitchAngle(75)  # Tilt the camera by 75 degrees
-pose.setHeadingAngle(0)  # Looking towards North
-c1.cameraController().setCameraPose(pose)
-pose.setHeadingAngle(90)  # Towards East
-c2.cameraController().setCameraPose(pose)
-pose.setHeadingAngle(180)  # Towards South
-c3.cameraController().setCameraPose(pose)
-pose.setHeadingAngle(270)  # Towards West
-c4.cameraController().setCameraPose(pose)
+<span class="c1"># Define a camera pose to update the views' cameras
+</span><span class="n">pose</span> <span class="o">=</span> <span class="n">QgsCameraPose</span><span class="p">()</span>
+<span class="n">pose</span><span class="p">.</span><span class="n">setCenterPoint</span><span class="p">(</span><span class="n">QgsVector3D</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">210</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># This is in 3D world coordinates
+</span><span class="n">pose</span><span class="p">.</span><span class="n">setDistanceFromCenterPoint</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">pose</span><span class="p">.</span><span class="n">setPitchAngle</span><span class="p">(</span><span class="mi">75</span><span class="p">)</span>  <span class="c1"># Tilt the camera by 75 degrees
+</span><span class="n">pose</span><span class="p">.</span><span class="n">setHeadingAngle</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Looking towards North
+</span><span class="n">c1</span><span class="p">.</span><span class="n">cameraController</span><span class="p">().</span><span class="n">setCameraPose</span><span class="p">(</span><span class="n">pose</span><span class="p">)</span>
+<span class="n">pose</span><span class="p">.</span><span class="n">setHeadingAngle</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>  <span class="c1"># Towards East
+</span><span class="n">c2</span><span class="p">.</span><span class="n">cameraController</span><span class="p">().</span><span class="n">setCameraPose</span><span class="p">(</span><span class="n">pose</span><span class="p">)</span>
+<span class="n">pose</span><span class="p">.</span><span class="n">setHeadingAngle</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>  <span class="c1"># Towards South
+</span><span class="n">c3</span><span class="p">.</span><span class="n">cameraController</span><span class="p">().</span><span class="n">setCameraPose</span><span class="p">(</span><span class="n">pose</span><span class="p">)</span>
+<span class="n">pose</span><span class="p">.</span><span class="n">setHeadingAngle</span><span class="p">(</span><span class="mi">270</span><span class="p">)</span>  <span class="c1"># Towards West
+</span><span class="n">c4</span><span class="p">.</span><span class="n">cameraController</span><span class="p">().</span><span class="n">setCameraPose</span><span class="p">(</span><span class="n">pose</span><span class="p">)</span>
 
-# We can set the 3D map views 2D extent to always match the main 2D canvas one
+<span class="c1"># We can set the 3D map views 2D extent to always match the main 2D canvas one
 # Our 3D views get updated while zooming/panning the main 2D canvas
-canvas = iface.mapCanvas()
-canvas.extentsChanged.connect(lambda :c1.mapSettings().setExtent(canvas.extent()))
-canvas.extentsChanged.connect(lambda :c2.mapSettings().setExtent(canvas.extent()))
-canvas.extentsChanged.connect(lambda :c3.mapSettings().setExtent(canvas.extent()))
-canvas.extentsChanged.connect(lambda :c4.mapSettings().setExtent(canvas.extent()))
-
+</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">iface</span><span class="p">.</span><span class="n">mapCanvas</span><span class="p">()</span>
+<span class="n">canvas</span><span class="p">.</span><span class="n">extentsChanged</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="p">:</span><span class="n">c1</span><span class="p">.</span><span class="n">mapSettings</span><span class="p">().</span><span class="n">setExtent</span><span class="p">(</span><span class="n">canvas</span><span class="p">.</span><span class="n">extent</span><span class="p">()))</span>
+<span class="n">canvas</span><span class="p">.</span><span class="n">extentsChanged</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="p">:</span><span class="n">c2</span><span class="p">.</span><span class="n">mapSettings</span><span class="p">().</span><span class="n">setExtent</span><span class="p">(</span><span class="n">canvas</span><span class="p">.</span><span class="n">extent</span><span class="p">()))</span>
+<span class="n">canvas</span><span class="p">.</span><span class="n">extentsChanged</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="p">:</span><span class="n">c3</span><span class="p">.</span><span class="n">mapSettings</span><span class="p">().</span><span class="n">setExtent</span><span class="p">(</span><span class="n">canvas</span><span class="p">.</span><span class="n">extent</span><span class="p">()))</span>
+<span class="n">canvas</span><span class="p">.</span><span class="n">extentsChanged</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="p">:</span><span class="n">c4</span><span class="p">.</span><span class="n">mapSettings</span><span class="p">().</span><span class="n">setExtent</span><span class="p">(</span><span class="n">canvas</span><span class="p">.</span><span class="n">extent</span><span class="p">()))</span>
 </code></pre></div></div>
 
 <center>
